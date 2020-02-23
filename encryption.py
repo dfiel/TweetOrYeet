@@ -2,10 +2,24 @@ from cryptography.fernet import Fernet
 import os
 
 
+def traverse_dirs(root_dir, encrypt=None, decrypt=None):
+    for i in os.walk(root_dir):
+        for x in i[2]:
+            path = os.path.normpath(os.path.join(os.getcwd(), i[0], x))
+            if encrypt:
+                encrypt.encrypt_file(path)
+            elif decrypt:
+                decrypt.decrypt_file(path)
+            else:
+                print(path)
+
+
 class Encrypter:
 
     def __init__(self):
-        self.key = None
+        self.crypter = None
+
+    def clear(self):
         self.crypter = None
 
     def load_key(self, filename):
