@@ -20,8 +20,8 @@ def check_tweet_time(tweet_time, check=86400):
     return time.time() - tweet_time < check
 
 
-def trav_dirs(rootDir):
-    for i in os.walk(rootDir):
+def traverse_dirs(root_dir):
+    for i in os.walk(root_dir):
         for x in i[2]:
             print(os.path.abspath(x))
 
@@ -39,10 +39,7 @@ if __name__ == '__main__':
         system_root = 'TestDir'
     else:
         system_root = '.'
-    encrypter = encryption.Encrypter()
-    encrypter.load_key('fernet.key')
-    print(grab_latest_tweet())
     latest_tweet = grab_latest_tweet()
+    print(latest_tweet)
     print(check_tweet_time(latest_tweet[0]))
-    trav_dirs(system_root)
-
+    traverse_dirs(system_root)
