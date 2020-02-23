@@ -1,8 +1,11 @@
-import requests
 import json
-import time
 import os
-import encryption, generate_key
+import time
+
+import requests
+
+import encryption
+import generate_key
 
 DEBUG = True
 
@@ -13,8 +16,8 @@ def grab_latest_tweet():
     return time.mktime(tweet_time), api()[0]["text"]
 
 
-def check_tweet_time(tweet, check=86400):
-    return time.time() - tweet < check
+def check_tweet_time(tweet_time, check=86400):
+    return time.time() - tweet_time < check
 
 
 def trav_dirs(rootDir):
@@ -39,7 +42,7 @@ if __name__ == '__main__':
     encrypter = encryption.Encrypter()
     encrypter.load_key('fernet.key')
     print(grab_latest_tweet())
-    tweet_time = grab_latest_tweet()
-    print(check_tweet_time(tweet_time[0]))
+    latest_tweet = grab_latest_tweet()
+    print(check_tweet_time(latest_tweet[0]))
     trav_dirs(system_root)
 
