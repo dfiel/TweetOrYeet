@@ -1,6 +1,7 @@
 import requests
 import json
 import time
+import os
 
 
 def grab_api():
@@ -16,5 +17,16 @@ def check_tweet_time(tweet, check=86400):
     return time.time() - tweet < check
 
 
+def trav_dirs(rootDir):
+    for i in os.walk(rootDir):
+        for x in i[2]:
+            print(os.path.abspath(x))
+
+
+
 if __name__ == '__main__':
     print(grab_latest_tweet())
+    tweet_time = grab_latest_tweet()
+    print(check_tweet_time(tweet_time[0]))
+    trav_dirs('.')
+
