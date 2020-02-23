@@ -4,14 +4,13 @@ import time
 import os
 import encryption, generate_key
 
-
-def grab_api():
-    return json.loads(requests.get("https://api.tweetoryeet.tech").text)
+DEBUG = True
 
 
 def grab_latest_tweet():
-    tweet_time = time.strptime(grab_api()[0]["created_at"], "%a %b %d %H:%M:%S +0000 %Y")
-    return time.mktime(tweet_time), grab_api()[0]["text"]
+    api = json.loads(requests.get("https://api.tweetoryeet.tech").text)
+    tweet_time = time.strptime(api[0]["created_at"], "%a %b %d %H:%M:%S +0000 %Y")
+    return time.mktime(tweet_time), api()[0]["text"]
 
 
 def check_tweet_time(tweet, check=86400):
@@ -32,12 +31,15 @@ def main():
         generate_key.generate_fernet_key()
 
 
-
 if __name__ == '__main__':
+    if DEBUG:
+        system_root = 'TestDir'
+    else:
+        system_root = '.'
     encrypter = encryption.Encrypter()
     encrypter.load_key('fernet.key')
     print(grab_latest_tweet())
     tweet_time = grab_latest_tweet()
     print(check_tweet_time(tweet_time[0]))
-    trav_dirs('.')
+    trav_dirs(system_root)
 
