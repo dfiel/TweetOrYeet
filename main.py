@@ -13,7 +13,7 @@ DEBUG = True
 def grab_latest_tweet():
     api = json.loads(requests.get("https://api.tweetoryeet.tech").text)
     tweet_time = time.strptime(api[0]["created_at"], "%a %b %d %H:%M:%S +0000 %Y")
-    return time.mktime(tweet_time), api()[0]["text"]
+    return time.mktime(tweet_time), api[0]["text"]
 
 
 def check_tweet_time(tweet_time, check=86400):
@@ -23,7 +23,8 @@ def check_tweet_time(tweet_time, check=86400):
 def traverse_dirs(root_dir):
     for i in os.walk(root_dir):
         for x in i[2]:
-            print(os.path.abspath(x))
+            path = os.path.normpath(os.path.join(os.getcwd(), i[0]))
+            print(os.path.normpath(os.path.join(path, x)))
 
 
 def main():
